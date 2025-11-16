@@ -28,7 +28,10 @@
             "symfony/runtime": true
         },
         "bump-after-update": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "ignore": ["PKSA-365x-2zjk-pt47"]
+        }
     },
     "autoload": {
         "psr-4": {
@@ -73,6 +76,7 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^4.3",
         "symfony/maker-bundle": "^1.64"
     }
 }

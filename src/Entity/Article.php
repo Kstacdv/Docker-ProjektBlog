@@ -15,96 +15,96 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
-    private ?string $Title = null;
+    private ?string $title = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $CreatedAt = null;
+    private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $DeletedAt = null;
+    private ?\DateTimeImmutable $deleted_at = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Tags = null;
+    private ?string $tags = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Author = null;
+    private ?string $author = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $ArticleBody = null;
+    private ?string $article_body = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function gettitle(): ?string
     {
-        return $this->Title;
+        return $this->title;
     }
 
-    public function setTitle(string $Title): static
+    public function setTitle(string $title): static
     {
-        $this->Title = $Title;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getcreated_at(): ?\DateTimeImmutable
     {
-        return $this->CreatedAt;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $CreatedAt): static
+    public function setcreated_at(\DateTimeImmutable $created_at): static
     {
-        $this->CreatedAt = $CreatedAt;
+        $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getDeletedAt(): ?\DateTimeImmutable
+    public function getdeleted_at(): ?\DateTimeImmutable
     {
-        return $this->DeletedAt;
+        return $this->deleted_at;
     }
 
-    public function setDeletedAt(?\DateTimeImmutable $DeletedAt): static
+    public function setdeleted_at(?\DateTimeImmutable $deleted_at): static
     {
-        $this->DeletedAt = $DeletedAt;
+        $this->deleted_at = $deleted_at;
 
         return $this;
     }
 
-    public function getTags(): ?string
+    public function gettags(): ?string
     {
-        return $this->Tags;
+        return $this->tags;
     }
 
-    public function setTags(string $Tags): static
+    public function settags(string $tags): static
     {
-        $this->Tags = $Tags;
+        $this->tags = $tags;
 
         return $this;
     }
 
-    public function getAuthor(): ?string
+    public function getauthor(): ?string
     {
-        return $this->Author;
+        return $this->author;
     }
 
-    public function setAuthor(string $Author): static
+    public function setauthor(string $author): static
     {
-        $this->Author = $Author;
+        $this->author = $author;
 
         return $this;
     }
 
-    public function getArticleBody(): ?string
+    public function getarticlebody(): ?string
     {
-        return $this->ArticleBody;
+        return $this->article_body;
     }
 
-    public function setArticleBody(?string $ArticleBody): static
+    public function setarticle_body(?string $article_body): static
     {
-        $this->ArticleBody = $ArticleBody;
+        $this->article_body = $article_body;
 
         return $this;
     }
