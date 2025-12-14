@@ -32,6 +32,9 @@ class Article
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $article_body = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTime $dateAdded = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Article
     public function setarticle_body(?string $article_body): static
     {
         $this->article_body = $article_body;
+
+        return $this;
+    }
+
+    public function getDateAdded(): ?\DateTime
+    {
+        return $this->dateAdded;
+    }
+
+    public function setDateAdded(\DateTime $dateAdded): static
+    {
+        $this->dateAdded = $dateAdded;
 
         return $this;
     }

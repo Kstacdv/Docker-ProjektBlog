@@ -60,6 +60,8 @@ class CreateUserCommand extends Command
 //
 //        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
+        $output->writeln('Username: '.$input->getArgument('username'));
+
         return Command::SUCCESS;
     }
 }
