@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class TestController extends AbstractController
 {
-    #[Route('/test', name: 'test')]
+    #[Route('/test', 'test')]
     public function index() : Response
     {
         return new Response('Hello World!');

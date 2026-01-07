@@ -9,8 +9,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class BlogController
 {
-    #[Route('/index', name: 'index')]
-    public function index() : Response
+    #[Route('/main-page', name: 'main_page')]
+    public function mainPage() : Response
     {
         return new Response('To bedzie strona glowna!');
     }
