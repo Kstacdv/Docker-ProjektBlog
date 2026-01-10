@@ -8,6 +8,11 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Article>
+ *
+ * @method Article|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Article|null findOneBy(array $criteria, array|null $orderBy = null)
+ * @method Article[]    findAll()
+ * @method Article[]    findBy(array $criteria, array|null $orderBy = null, int|null $limit = null, int|null $offset = null)
  */
 class ArticleRepository extends ServiceEntityRepository
 {
@@ -15,6 +20,7 @@ class ArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Article::class);
     }
+
 
     //    /**
     //     * @return Article[] Returns an array of Article objects
