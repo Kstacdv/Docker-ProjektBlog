@@ -24,6 +24,14 @@ class BlogController extends AbstractController
     }
 
     #[Route('/main', name: 'main_page')]
+    public function index(): Response {
+        $parameteres = [
+            'articles' => $this->articleRepository->getLastArticle()
+        ];
+
+        dd($parameteres);
+        //return $this->render('main_page/index.html.twig, $parameters
+    }
     public function mainPage() : Response {
         $articles = $this->articleRepository->findAll();
         dump($articles);
