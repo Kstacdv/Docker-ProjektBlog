@@ -23,13 +23,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
-	install-php-extensions \
-		@composer \
-		apcu \
-		intl \
-		opcache \
-		zip \
-	;
+    install-php-extensions \
+       @composer \
+       apcu \
+       intl \
+       opcache \
+       zip \
+       xml \
+       sodium \
+      http \
+    ;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
