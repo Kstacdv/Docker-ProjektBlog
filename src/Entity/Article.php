@@ -26,14 +26,15 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $tags = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $article_body = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $dateAdded = null;
+
+    #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?user $author = null;
 
     public function getId(): ?int
     {
@@ -88,18 +89,6 @@ class Article
         return $this;
     }
 
-    public function getauthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setauthor(string $author): static
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
     public function getarticlebody(): ?string
     {
         return $this->article_body;
@@ -120,6 +109,18 @@ class Article
     public function setDateAdded(\DateTime $dateAdded): static
     {
         $this->dateAdded = $dateAdded;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?user
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?user $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }
