@@ -1,16 +1,45 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mój Projekt Blog{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        nav ul { list-style: none; display: flex; gap: 20px; background: #eee; padding: 10px; }
+        .search-bar { margin-bottom: 20px; }
+        .article-card { border-bottom: 1px solid #ccc; padding: 10px 0; }
+    </style>
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</head>
+<body>
+<header>
+    <div class="search-bar">
+        <form action="{{ path('article_search') }}" method="get">
+            <label>
+                <input type="text" name="q" placeholder="Szukaj artykułów..." value="{{ app.request.query.get('q') }}">
+            </label>
+            <button type="submit">Szukaj</button>
+        </form>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="{{ path('main_page') }}">Strona główna</a></li>
+            <li><a href="#">Artykuły</a></li>
+            <li><a href="#">O mnie</a></li>
+            <li><a href="#">Kontakt</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    {% block body %}{% endblock %}
+</main>
+
+<footer>
+    <p>&copy; {{ "now"|date("Y") }} Stopka :)</p>
+</footer>
+</body>
 </html>
