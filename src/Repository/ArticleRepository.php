@@ -57,4 +57,14 @@ class ArticleRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
+    public function searchByTitle(string $term): array
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        return $qb->andWhere('a.title LIKE :term')
+            ->setParameter('term', '%'.$term.'%')
+            ->orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

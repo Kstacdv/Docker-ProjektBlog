@@ -29,8 +29,8 @@ class BlogController extends AbstractController
             'articles' => $this->articleRepository->getLastArticle()
         ];
 
-        dd($parameteres);
-        //return $this->render('main_page/index.html.twig, $parameters
+//        dd($parameteres);
+        return $this->render('main_page/index.html.twig', $parameteres);
     }
     public function mainPage() : Response {
         $articles = $this->articleRepository->findAll();
