@@ -9,6 +9,39 @@
         nav ul { list-style: none; display: flex; gap: 20px; background: #eee; padding: 10px; }
         .search-bar { margin-bottom: 20px; }
         .article-card { border-bottom: 1px solid #ccc; padding: 10px 0; }
+        .main-menu {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            background: #f4f4f4;
+            padding: 10px;
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            border: 1px solid #ccc;
+            list-style: none;
+            padding: 10px;
+            min-width: 150px;
+            z-index: 1000;
+        }
+        .dropdown-menu li {
+            margin: 5px 0;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .user-info {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+        }
     </style>
 
     {% block stylesheets %}{% endblock %}
@@ -26,11 +59,30 @@
     </div>
 
     <nav>
-        <ul>
+        <ul class="main-menu">
             <li><a href="{{ path('main_page') }}">Strona główna</a></li>
-            <li><a href="#">Artykuły</a></li>
-            <li><a href="#">O mnie</a></li>
+
+            {# Sekcja Artykuły lista rozwijana #}
+            <li class="dropdown">
+                <a href="#">Artykuły ▼</a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('app_article_show') }}">Lista wszystkich</a></li>
+                    <li><a href="{{ path('app_article_new') }}">Napisz artykuł</a></li>
+                    <li><a href="#">Kategorie</a></li>
+                </ul>
+            </li>
+
+            <li><a href="{{ path('app_about_me') }}">O mnie</a></li>
             <li><a href="#">Kontakt</a></li>
+
+            {% if app.user %}
+                <li class="user-info">
+                    <span>Zalogowany: {{ app.user.email }}</span>
+                    <a href="/logout" class="logout-link">Wyloguj</a>
+                </li>
+            {% else %}
+                <li><a href="/login">Zaloguj</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>
