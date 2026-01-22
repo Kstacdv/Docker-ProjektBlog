@@ -66,13 +66,13 @@
             <li class="dropdown">
                 <a href="#">Artykuły ▼</a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ path('app_article_show') }}">Lista wszystkich</a></li>
+                    <li><a href="{{ path('app_article_index') }}">Lista wszystkich</a></li>
                     <li><a href="{{ path('app_article_new') }}">Napisz artykuł</a></li>
                     <li><a href="#">Kategorie</a></li>
                 </ul>
             </li>
 
-            <li><a href="{{ path('app_about_me') }}">O mnie</a></li>
+            <li><a href="#">O mnie</a></li>
             <li><a href="#">Kontakt</a></li>
 
             {% if app.user %}

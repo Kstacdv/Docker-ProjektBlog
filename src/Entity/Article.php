@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use AllowDynamicProperties;
 use App\Repository\ArticleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[AllowDynamicProperties]
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
 {
@@ -15,6 +18,12 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
+    #[Assert\NotBlank(message: "Tytuł nie może być pusty.")]
+    #[Assert\Length(
+        min: 5,
+        max: 80,
+        minMessage: "Tytuł musi mieć co najmniej {{ limit }} znaków."
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
@@ -26,7 +35,8 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $tags = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank(message: "Treść artykułu jest wymagana.")]
     private ?string $article_body = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -34,7 +44,7 @@ class Article
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $author = null;
+    private ?User $author = null;
 
     public function getId(): ?int
     {
@@ -113,12 +123,12 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?user
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?user $author): static
+    public function setAuthor(?User $author): static
     {
         $this->author = $author;
 

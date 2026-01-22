@@ -13,3 +13,4 @@
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 /Postman (x64).exe
+/Adminer 5.4.1 PostgreSQL 16.11 dump.sql

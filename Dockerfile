@@ -16,6 +16,11 @@ WORKDIR /app
 VOLUME /app/var/
 
 # persistent / runtime deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    file \
+    git \
+    libgcrypt20 \
+    && rm -rf /var/lib/apt/lists/*
 # hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	file \
@@ -31,7 +36,7 @@ RUN set -eux; \
        zip \
        xml \
        sodium \
-      http \
+       http \
     ;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser

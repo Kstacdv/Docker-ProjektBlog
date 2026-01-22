@@ -25,12 +25,12 @@ class BlogController extends AbstractController
 
     #[Route('/main', name: 'main_page')]
     public function index(): Response {
-        $parameteres = [
+        $parameters = [
             'articles' => $this->articleRepository->getLastArticle()
         ];
 
-//        dd($parameteres);
-        return $this->render('main_page/index.html.twig', $parameteres);
+//        dd($parameters);
+        return $this->render('main_page/index.html.twig', $parameters);
     }
     public function mainPage() : Response {
         $articles = $this->articleRepository->findAll();
@@ -55,12 +55,12 @@ class BlogController extends AbstractController
     #[Route('/articles', name: 'blog-articles')]
     public function showArticles(): Response {
         $articles = $this->articleRepository->findAll();
-        $parameteres = [];
+        $parameters = [];
         if ($articles) {
-            $parameteres = $this->articleProvider->transformDataForTwig($articles);
+            $parameters = $this->articleProvider->transformDataForTwig($articles);
         }
 
-        return $this->render('articles/articles.html.twig', $parameteres);
+        return $this->render('articles/articles.html.twig', $parameters);
     }
 }
 

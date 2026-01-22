@@ -1,1 +1,22 @@
 {% extends 'base.html.twig' %}
+
+{% block body %}
+    <article class="full-article">
+        <h1>{{ article.title }}</h1>
+        <p class="meta">
+            Autor: {{ article.author }} |
+            Data: {{ article.dateAdded|date('Y-m-d') }}
+        </p>
+
+        <div class="tags">
+            Tagi: {{ article.tags }}
+        </div>
+
+        <div class="content">
+            {{ article.articleBody|nl2br }}
+        </div>
+    </article>
+
+    <hr>
+    <a href="{{ path('main_page') }}">Powrót do strony głównej</a>
+{% endblock %}

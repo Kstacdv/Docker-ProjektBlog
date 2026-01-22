@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wszystkie artykuły{% endblock %}
+
+{% block body %}
+    <h1>Lista wszystkich artykułów</h1>
+
+    {% if articles is not empty %}
+        {% for article in articles %}
+            <div class="article-card">
+                <h2>
+                    <a href="{{ path('app_article_show', {'id': article.id}) }}">
+                        {{ article.title }}
+                    </a>
+                </h2>
+                <p><i>Opublikowano: {{ article.dateAdded|date('Y-m-d') }}</i></p>
+                <p>{{ article.articleBody|slice(0, 30) }}...</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Baza artykułów jest pusta.</p>
+    {% endif %}
+{% endblock %}

@@ -8,6 +8,7 @@
     "require": {
         "php": ">=8.4.13",
         "ext-ctype": "*",
+        "ext-http": "*",
         "ext-iconv": "*",
         "doctrine/dbal": "^3.10.4",
         "doctrine/doctrine-bundle": "^2.18.2",
@@ -18,14 +19,14 @@
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
         "symfony/flex": "^2.10",
+        "symfony/form": "7.3.*",
         "symfony/framework-bundle": "7.3.*",
         "symfony/http-client": "7.3.*",
         "symfony/runtime": "7.3.*",
         "symfony/security-bundle": "7.3.*",
         "symfony/uid": "7.3.*",
         "symfony/validator": "7.3.*",
-        "symfony/yaml": "7.3.*",
-        "ext-http": "*"
+        "symfony/yaml": "7.3.*"
     },
     "config": {
         "allow-plugins": {

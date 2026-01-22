@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\ArticleType;
+use App\Repository\ArticleRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ArticleController extends AbstractController
 {
@@ -28,7 +31,7 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $article->setDateAdded(new \DateTime());
+            $article->setDateAdded(new DateTime());
             $article->setAuthor($this->getUser());
             $entityManager->persist($article);
             $entityManager->flush();
@@ -38,6 +41,16 @@ class ArticleController extends AbstractController
 
         return $this->render('article/new.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/articles', name: 'app_article_index', methods: ['GET'])]
+    public function index(ArticleRepository $articleRepository): Response
+    {
+        $articles = $articleRepository->findAll();
+
+        return $this->render('article/index.html.twig', [
+            'articles' => $articles,
         ]);
     }
 
