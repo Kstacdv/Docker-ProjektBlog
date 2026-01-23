@@ -7,6 +7,7 @@ use App\Repository\ArticleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[AllowDynamicProperties]
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
@@ -15,6 +16,7 @@ class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['article:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
@@ -24,6 +26,7 @@ class Article
         max: 80,
         minMessage: "Tytuł musi mieć co najmniej {{ limit }} znaków."
     )]
+    #[Groups(['article:read'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]

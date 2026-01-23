@@ -17,8 +17,8 @@ class BlogController extends AbstractController
     public function __construct(
         private ArticleRepository $articleRepository,
         private ArticleProvider $articleProvider,
-//        private AboutMeRepository $aboutMeRepository,
-//        private AboutMeProvider $aboutMeProvider
+        private AboutMeRepository $aboutMeRepository,
+        private AboutMeProvider $aboutMeProvider
         ) {
 
     }
@@ -29,7 +29,6 @@ class BlogController extends AbstractController
             'articles' => $this->articleRepository->getLastArticle()
         ];
 
-//        dd($parameters);
         return $this->render('main_page/index.html.twig', $parameters);
     }
     public function mainPage() : Response {

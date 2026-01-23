@@ -20,9 +20,3 @@ class UserController extends AbstractController
         ])->format();
     }
 }
-
-//            'data' => 'User data',
-//            'messages' => 'User messages',
-//            'errors' => 'User errors',
-//            'statusCode' => 'User status_code',
-//            'additionalData' => 'User additionalData',
