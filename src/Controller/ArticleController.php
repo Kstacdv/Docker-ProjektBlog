@@ -11,18 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ArticleController extends AbstractController
 {
-    #[Route('/article/{id}', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
-    {
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-        ]);
-    }
-
     #[Route('/article/new', name: 'app_article_new')]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
@@ -31,7 +25,8 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $article->setDateAdded(new DateTime());
+            $article->setCreatedAt(new \DateTimeImmutable());
+            $article->setDateAdded(new \DateTime());
             $article->setAuthor($this->getUser());
             $entityManager->persist($article);
             $entityManager->flush();
@@ -41,6 +36,14 @@ class ArticleController extends AbstractController
 
         return $this->render('article/new.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/article/{id}', name: 'app_article_show', methods: ['GET'])]
+    public function show(Article $article): Response
+    {
+        return $this->render('article/show.html.twig', [
+            'article' => $article,
         ]);
     }
 

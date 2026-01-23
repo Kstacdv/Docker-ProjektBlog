@@ -27,23 +27,23 @@ class Article
     private ?string $title = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $deleted_at = null;
+    private ?\DateTimeImmutable $deletedAt = null;
 
     #[ORM\Column(length: 255)]
     private ?string $tags = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Assert\NotBlank(message: "Treść artykułu jest wymagana.")]
-    private ?string $article_body = null;
+    private ?string $articleBody = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $dateAdded = null;
 
-    #[ORM\ManyToOne(inversedBy: 'articles')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articles')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $author = null;
 
     public function getId(): ?int
@@ -51,7 +51,7 @@ class Article
         return $this->id;
     }
 
-    public function gettitle(): ?string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -63,50 +63,50 @@ class Article
         return $this;
     }
 
-    public function getcreated_at(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setcreated_at(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getdeleted_at(): ?\DateTimeImmutable
+    public function getDeletedAt(): ?\DateTimeImmutable
     {
-        return $this->deleted_at;
+        return $this->deletedAt;
     }
 
-    public function setdeleted_at(?\DateTimeImmutable $deleted_at): static
+    public function setDeletedAt(?\DateTimeImmutable $deletedAt): static
     {
-        $this->deleted_at = $deleted_at;
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }
 
-    public function gettags(): ?string
+    public function getTags(): ?string
     {
         return $this->tags;
     }
 
-    public function settags(string $tags): static
+    public function setTags(string $tags): static
     {
         $this->tags = $tags;
 
         return $this;
     }
 
-    public function getarticlebody(): ?string
+    public function getArticleBody(): ?string
     {
-        return $this->article_body;
+        return $this->articleBody;
     }
 
-    public function setarticle_body(?string $article_body): static
+    public function setArticleBody(?string $articleBody): static
     {
-        $this->article_body = $article_body;
+        $this->articleBody = $articleBody;
 
         return $this;
     }

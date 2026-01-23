@@ -15,19 +15,8 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('created_at', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('deleted_at', null, [
-                'widget' => 'single_text',
-            ])
+            ->add('articleBody')
             ->add('tags')
-            ->add('article_body')
-            ->add('dateAdded')
-            ->add('author', EntityType::class, [
-                'class' => user::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 

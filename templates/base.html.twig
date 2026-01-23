@@ -67,21 +67,28 @@
                 <a href="#">Artykuły ▼</a>
                 <ul class="dropdown-menu">
                     <li><a href="{{ path('app_article_index') }}">Lista wszystkich</a></li>
+                    {% if app.user %}
                     <li><a href="{{ path('app_article_new') }}">Napisz artykuł</a></li>
+                    {% endif %}
                     <li><a href="#">Kategorie</a></li>
                 </ul>
             </li>
 
-            <li><a href="#">O mnie</a></li>
-            <li><a href="#">Kontakt</a></li>
+            <li><a href="{{ path('app_about') }}">O mnie</a></li>
+            <li><a href="{{ path('app_contact') }}">Kontakt</a></li>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="/admin" style="color: red;">PANEL ADMINA</a>
+            {% endif %}
 
             {% if app.user %}
                 <li class="user-info">
                     <span>Zalogowany: {{ app.user.email }}</span>
-                    <a href="/logout" class="logout-link">Wyloguj</a>
+                    <a href="{{ path('app_logout') }}" class="logout-link">Wyloguj</a>
                 </li>
             {% else %}
-                <li><a href="/login">Zaloguj</a></li>
+                <li><a href="{{ path('app_login') }}">Zaloguj</a></li>
+                <li><a href="{{ path('app_register') }}">Zarejestruj się</a></li>
             {% endif %}
         </ul>
     </nav>
