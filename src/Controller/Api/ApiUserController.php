@@ -2,12 +2,34 @@
 
 namespace App\Controller\Api;
 
-class ApiUserController
-{
+use App\Formatter\ApiResponseFormatter;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Attribute\Route;
 
-//            'data' => 'User data',
-//            'messages' => 'User messages',
-//            'errors' => 'User errors',
-//            'statusCode' => 'User status_code',
-//            'additionalData' => 'User additionalData',
+#[Route('/api/users', name: 'api_user_')]
+class ApiUserController extends AbstractController
+{
+    public function __construct(
+        private ApiResponseFormatter $apiResponseFormatter
+    ) {}
+
+    #[Route('/show', name: 'show', methods: ['GET'])]
+    public function showUser(): JsonResponse
+    {
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->apiResponseFormatter
+                ->withData(null)
+                ->format();
+        }
+        $userData = [
+            'user_id' => $currentUser->getId(),
+            'user_email' => $currentUser->getUserIdentifier(),
+        ];
+
+        return $this->apiResponseFormatter
+            ->withData($userData)
+            ->format();
+    }
 }

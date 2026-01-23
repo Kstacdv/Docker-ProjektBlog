@@ -28,7 +28,7 @@ class AppFixtures extends Fixture
         $article->setTitle('Tytuł pierwszego');
         $article->setCreatedAt(new \DateTimeImmutable());
         $article->settags('Lore');
-        $article->setauthor($user);
+        $article->setAuthor($user);
         $article->setDateAdded(new \DateTime());
 
         $manager->persist($article);
@@ -43,8 +43,8 @@ class AppFixtures extends Fixture
         );
         $article2->settitle('Tytuł drugiego');
         $article2->setCreatedAt(new \DateTimeImmutable());
-        $article2->settags('Lore');
-        $article2->setauthor($user);
+        $article2->setTags('Lore');
+        $article2->setAuthor($user);
         $article2->setDateAdded(new \DateTime());
 
         $manager->persist($article2);

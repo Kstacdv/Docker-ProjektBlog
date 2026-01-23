@@ -61,7 +61,7 @@ class ArticleRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('a');
 
-        return $qb->andWhere('a.title LIKE :term')
+        return $qb->andWhere('a.title ILIKE :term')
             ->setParameter('term', '%'.$term.'%')
             ->orderBy('a.id', 'ASC')
             ->getQuery()

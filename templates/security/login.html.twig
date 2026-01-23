@@ -31,5 +31,13 @@
 
         <br><br>
         <button type="submit">Zaloguj</button>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label == 'error' ? 'danger' : label }} m-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
     </form>
 {% endblock %}

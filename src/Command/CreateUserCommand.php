@@ -2,65 +2,51 @@
 
 namespace App\Command;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[AsCommand(
-    name: 'createUser',
-    description: 'Command for creating and defining a new user.',
-)]
+#[AsCommand(name: 'createUser', description: 'Tworzy nowego użytkownika.')]
 class CreateUserCommand extends Command
 {
-
-    private bool $requirePassword;
-
-    public function __construct(bool $requirePassword = false) {
-        $this->requirePassword = $requirePassword;
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private UserPasswordHasherInterface $passwordHasher
+    ) {
         parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-            ->setHelp("This command allows you to create a user");
-        ;
+            ->addArgument('email', InputArgument::REQUIRED, 'Email użytkownika')
+            ->addArgument('password', InputArgument::REQUIRED, 'Hasło użytkownika');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        $email = $input->getArgument('email');
+        $password = $input->getArgument('password');
 
-        $output->writeln([
-           'User Creator',
-           '============='
-        ]);
+        $user = new User();
+        $user->setEmail($email);
+        $user->setRoles(['ROLE_USER']);
 
-//        $output->writeln($this->someMethod());
+        $hashedPassword = $this->passwordHasher->hashPassword($user, $password);
+        $user->setPassword($hashedPassword);
+        $user->setIsVerified(true);
 
-        $output->writeln('Whoa!');
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
-        $output->write('You are about to ');
-        $output->write('create user.');
-
-//        if ($arg1) {
-//            $io->note(sprintf('You passed an argument: %s', $arg1));
-//        }
-//
-//        if ($input->getOption('option1')) {
-//            // ...
-//        }
-//
-//        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
-        $output->writeln('Username: '.$input->getArgument('username'));
+        $io->success(sprintf('Użytkownik %s został utworzony pomyślnie!', $email));
 
         return Command::SUCCESS;
     }
