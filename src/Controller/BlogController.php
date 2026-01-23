@@ -9,6 +9,7 @@ use App\Service\ArticleProvider;
 use App\Service\AboutMeProvider;
 use App\Repository\AboutMeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -30,14 +31,21 @@ class BlogController extends AbstractController
     }
 
     #[Route('/articles', name: 'blog-articles')]
-    public function showArticles(): Response {
-        $articles = $this->articleRepository->findAll();
-        $parameters = [];
-        if ($articles) {
-            $parameters = $this->articleProvider->transformDataForTwig($articles);
+    public function showArticles(Request $request): Response {
+        $tag = $request->query->get('tag');
+
+        if ($tag) {
+            $articles = $this->articleRepository->findByTag($tag);
+        } else {
+            $articles = $this->articleRepository->findAll();
         }
 
-        return $this->render('articles/articles.html.twig', $parameters);
+        $transformedData = $this->articleProvider->transformDataForTwig($articles);
+
+        return $this->render('article/index.html.twig', [
+            'articles_list' => $transformedData['articles'] ?? [],
+            'current_tag' => $tag
+        ]);
     }
 }
 

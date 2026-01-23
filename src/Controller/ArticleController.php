@@ -15,6 +15,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ArticleController extends AbstractController
 {
+    // Zastąpiony w pełni przez BlogController
+    // Zostawiony jako prezentacja, CRUD był użyty do wygenerowania tego pliku
     #[Route('/article/new', name: 'app_article_new')]
     #[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -47,14 +49,14 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/articles', name: 'app_article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
-    {
-        $articles = $articleRepository->findAll();
-
-        return $this->render('article/index.html.twig', [
-            'articles' => $articles,
-        ]);
-    }
+//    #[Route('/articles', name: 'app_article_index', methods: ['GET'])]
+//    public function index(ArticleRepository $articleRepository): Response
+//    {
+//        $articles = $articleRepository->findAll();
+//
+//        return $this->render('article/index.html.twig', [
+//            'articles' => $articles,
+//        ]);
+//    }
 
 }

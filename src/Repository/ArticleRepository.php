@@ -38,14 +38,37 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findOneBySomeField($value): ?Article
+    public function findAllUniqueTags(): array
+    {
+        $results = $this->createQueryBuilder('a')
+            ->select('a.tags')
+            ->where('a.tags IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+
+        $tags = [];
+        foreach ($results as $row) {
+            $exploded = explode(',', $row['tags']);
+            foreach ($exploded as $tag) {
+                $trimmed = trim($tag);
+                if (!empty($trimmed)) {
+                    $tags[$trimmed] = $trimmed;
+                }
+            }
+        }
+
+        ksort($tags);
+        return array_values($tags);
+    }
+
+    public function findByTag(string $tag): array
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('LOWER(a.tags) LIKE LOWER(:tag)')
+            ->setParameter('tag', '%' . $tag . '%')
+            ->orderBy('a.id', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
 
     public function getLastArticle(): ?Article

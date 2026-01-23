@@ -4,12 +4,15 @@
     <article class="full-article">
         <h1>{{ article.title }}</h1>
         <p class="meta">
-            Autor: {{ article.author.email }} |
+            Autor: {{ article.author.email : "Anonim" }}
             Data: {{ article.dateAdded|date('Y-m-d') }}
         </p>
 
         <div class="tags">
-            Tagi: {{ article.tags }}
+            Tagi:
+            {% for tag in article.tags|split(',') %}
+                <a href="{{ path('blog-articles', {tag: tag|trim}) }}" class="badge">{{ tag|trim }}</a>
+            {% endfor %}
         </div>
 
         <div class="content">

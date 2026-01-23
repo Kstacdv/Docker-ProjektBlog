@@ -1,23 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Wszystkie artykuły{% endblock %}
+{% block title %}
+    {% if current_tag|default(null) %}Artykuły: {{ current_tag }}{% else %}Wszystkie artykuły{% endif %}
+{% endblock %}
 
 {% block body %}
-    <h1>Lista wszystkich artykułów</h1>
+    <h1>
+        {% if current_tag|default(null) %}
+            Artykuły z tagiem: <span style="color: #007bff;">{{ current_tag }}</span>
+        {% else %}
+            Lista wszystkich artykułów
+        {% endif %}
+    </h1>
 
-    {% if articles is not empty %}
-        {% for article in articles %}
-            <div class="article-card">
-                <h2>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">
-                        {{ article.title }}
-                    </a>
-                </h2>
-                <p><i>Opublikowano: {{ article.dateAdded|date('Y-m-d') }}</i></p>
-                <p>{{ article.articleBody|slice(0, 30) }}...</p>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>Baza artykułów jest pusta.</p>
-    {% endif %}
+    <div class="articles-container">
+        {% if articles_list is not empty %}
+            {% for item in articles_list|default([]) %}
+                <div class="article-card" style="border-bottom: 1px solid #ccc; margin-bottom: 20px; padding-bottom: 10px;">
+                    <h2>
+                        <a href="{{ item.link }}">
+                            {{ item.title }}
+                        </a>
+                    </h2>
+                    <p><i>Opublikowano: {{ item.date }}</i></p>
+                    <p>{{ item.content }}</p>
+                    <small>Autor: {{ item.author }}</small>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Brak artykułów do wyświetlenia.</p>
+        {% endif %}
+    </div>
+
+    <p><a href="{{ path('blog-articles') }}">Powrót do pełnej listy</a></p>
 {% endblock %}

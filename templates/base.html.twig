@@ -66,11 +66,17 @@
             <li class="dropdown">
                 <a href="#">Artykuły ▼</a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ path('app_article_index') }}">Lista wszystkich</a></li>
+                    <li><a href="{{ path('blog-articles') }}">Lista wszystkich</a></li>
                     {% if app.user %}
                     <li><a href="{{ path('app_article_new') }}">Napisz artykuł</a></li>
                     {% endif %}
-                    <li><a href="#">Kategorie</a></li>
+                    {% if app_tags is defined %}
+                        {% for tag in app_tags %}
+                            <li><a href="{{ path('blog-articles', {tag: tag}) }}">{{ tag }}</a></li>
+                        {% endfor %}
+                    {% else %}
+                        <li><a href="#">Brak tagów</a></li>
+                    {% endif %}
                 </ul>
             </li>
 
