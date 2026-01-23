@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Wyniki wyszukiwania dla: "{{ searchTerm }}"</h1>
+
+    {% for article in articles %}
+        <div class="article-card">
+            <h2><a href="{{ path('article_search', {'id': article.id}) }}">{{ article.title }}</a></h2>
+
+            <p>{{ article.dateAdded|date('Y-m-d') }}</p>
+            <p>{{ article.articleBody|slice(0, 30) }}...</p>
+        </div>
+    {% else %}
+        <p>Nie znaleziono artykułów pasujących do frazy.</p>
+    {% endfor %}
+{% endblock %}
