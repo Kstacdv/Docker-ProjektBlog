@@ -38,6 +38,13 @@ jobs:
             *.cache-from=type=gha,scope=${{github.ref}}
             *.cache-from=type=gha,scope=refs/heads/main
             *.cache-to=type=gha,scope=${{github.ref}},mode=max
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+            php-version: '8.4'
+            extensions: xml, sodium, http, pdo_pgsql, intl, xml, ctype, mbstring, iconv
+            ini-values: post_max_size=256M, max_execution_time=300
+            coverage: none      
       - name: Start services
         run: docker compose up --wait --no-build
       - name: Check HTTP reachability
