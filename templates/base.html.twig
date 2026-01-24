@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mój Projekt Blog{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        nav ul { list-style: none; display: flex; gap: 20px; background: #eee; padding: 10px; }
+        .search-bar { margin-bottom: 20px; }
+        .article-card { border-bottom: 1px solid #ccc; padding: 10px 0; }
+        .main-menu {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            background: #f4f4f4;
+            padding: 10px;
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            border: 1px solid #ccc;
+            list-style: none;
+            padding: 10px;
+            min-width: 150px;
+            z-index: 1000;
+        }
+        .dropdown-menu li {
+            margin: 5px 0;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .user-info {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</head>
+<body>
+<header>
+    <div class="search-bar">
+        <form action="{{ path('article_search') }}" method="get">
+            <label>
+                <input type="text" name="q" placeholder="Szukaj artykułów..." value="{{ app.request.query.get('q') }}">
+            </label>
+            <button type="submit">Szukaj</button>
+        </form>
+    </div>
+
+    <nav>
+        <ul class="main-menu">
+            <li><a href="{{ path('main_page') }}">Strona główna</a></li>
+
+            {# Artykuły lista rozwijana #}
+            <li class="dropdown">
+                <a href="#">Artykuły ▼</a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('blog-articles') }}">Lista wszystkich</a></li>
+                    {% if app.user %}
+                    <li><a href="{{ path('app_article_new') }}">Napisz artykuł</a></li>
+                    {% endif %}
+                    {% if app_tags is defined %}
+                        {% for tag in app_tags %}
+                            <li><a href="{{ path('blog-articles', {tag: tag}) }}">{{ tag }}</a></li>
+                        {% endfor %}
+                    {% else %}
+                        <li><a href="#">Brak tagów</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+
+            <li><a href="{{ path('app_about') }}">O mnie</a></li>
+            <li><a href="{{ path('app_contact') }}">Kontakt</a></li>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="/admin" style="color: red;">PANEL ADMINA</a>
+            {% endif %}
+
+            {% if app.user %}
+                <li class="user-info">
+                    <span>Zalogowany: {{ app.user.email }}</span>
+                    <a href="{{ path('app_logout') }}" class="logout-link">Wyloguj</a>
+                </li>
+            {% else %}
+                <li><a href="{{ path('app_login') }}">Zaloguj</a></li>
+                <li><a href="{{ path('app_register') }}">Zarejestruj się</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+<main>
+    {% block body %}{% endblock %}
+</main>
+
+<footer>
+    <p>&copy; {{ "now"|date("Y") }} Stopka :)</p>
+</footer>
+</body>
+</html>

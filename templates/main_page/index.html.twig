@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ostatni artykuł</h1>
+
+    {% if articles %}
+        <div class="article-card">
+            <h2>{{ articles.title }}</h2>
+            <p><i>Dodano: {{ articles.dateAdded|date('Y-m-d') }}</i></p>
+            <p>{{ articles.articlebody|slice(0, 30) }}...</p>
+            <a href="{{ path('app_article_show', {'id': articles.id}) }}">Czytaj więcej</a>
+        </div>
+    {% else %}
+        <p>Brak artykułów do wyświetlenia.</p>
+    {% endif %}
+{% endblock %}

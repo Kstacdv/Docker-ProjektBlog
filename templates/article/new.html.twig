@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nowy Artykuł{% endblock %}
+
+{% block body %}
+    <h1>Napisz nowy artykuł</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">Zapisz artykuł</button>
+    {{ form_end(form) }}
+
+    <br>
+    <a href="{{ path('main_page') }}">Powrót do strony głównej</a>
+{% endblock %}
