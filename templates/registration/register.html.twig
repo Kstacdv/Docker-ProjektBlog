@@ -7,17 +7,22 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <h1>Zarejestruj się w naszym serwisie</h1>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+        {{ form_row(registrationForm.email, {
+            label: 'Email '
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Hasło '
+        }) }}
+        {{ form_row(registrationForm.agreeTerms, {
+            label: 'Zgoda na warunki użytkowania' }) }}
 
         <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    {{ form_end(registrationForm, {
+        label: 'Zarejestruj się'
+    }) }}
 {% endblock %}
