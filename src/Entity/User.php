@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`User`')]
@@ -22,7 +25,8 @@ class User implements UserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    private ?string $email = null;
+    #[Assert\NotBlank]
+    private ?string $email;
 
     /**
      * @var list<string> The user roles
@@ -34,7 +38,8 @@ class User implements UserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    private ?string $password = null;
+    #[Assert\NotBlank]
+    private ?string $password;
 
     /**
      * @var Collection<int, Article>
@@ -206,5 +211,10 @@ class User implements UserInterface
         $this->tempPassword = $tempPassword;
 
         return $this;
+    }
+
+    private static function loadValidatorMetadata(ClassMetadata $metadata): void {
+        $metadata->addPropertyConstraint('email', new NotBlank([]));
+        $metadata->addPropertyConstraint('password', new NotBlank([]));
     }
 }

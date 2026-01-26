@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ApiUserController extends AbstractController
 {
     public function __construct(
-        private ApiResponseFormatter $apiResponseFormatter
+        private readonly ApiResponseFormatter $apiResponseFormatter
     ) {}
 
     #[Route('/show', name: 'show', methods: ['GET'])]
