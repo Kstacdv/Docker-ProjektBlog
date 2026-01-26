@@ -114,6 +114,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $passwordChangeToken = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $tempPassword = null;
+
     /**
      * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
      */
@@ -176,5 +182,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->email ?? 'Anonim';
+    }
+
+    public function getPasswordChangeToken(): ?string
+    {
+        return $this->passwordChangeToken;
+    }
+
+    public function setPasswordChangeToken(?string $passwordChangeToken): static
+    {
+        $this->passwordChangeToken = $passwordChangeToken;
+
+        return $this;
+    }
+
+    public function getTempPassword(): ?string
+    {
+        return $this->tempPassword;
+    }
+
+    public function setTempPassword(?string $tempPassword): static
+    {
+        $this->tempPassword = $tempPassword;
+
+        return $this;
     }
 }

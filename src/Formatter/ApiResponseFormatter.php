@@ -30,4 +30,19 @@ class ApiResponseFormatter
             'additionalData' => $this->additionalData ?: null
         ], $this->statusCode);
     }
+    public function createSuccessResponse(array $data, int $status = 200): JsonResponse
+    {
+        return new JsonResponse([
+            'status' => 'success',
+            'data' => $data
+        ], $status);
+    }
+
+    public function createErrorResponse(string $message, int $status = 400): JsonResponse
+    {
+        return new JsonResponse([
+            'status' => 'error',
+            'message' => $message
+        ], $status);
+    }
 }
