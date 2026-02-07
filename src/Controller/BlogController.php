@@ -47,5 +47,18 @@ class BlogController extends AbstractController
             'current_tag' => $tag
         ]);
     }
+    #[Route('/article/{id}', name: 'app_article_show', methods: ['GET'])]
+    public function show(int $id): Response
+    {
+        $article = $this->articleRepository->find($id);
+
+        if (!$article) {
+            throw $this->createNotFoundException('Artykuł nie istnieje.');
+        }
+
+        return $this->render('article/show.html.twig', [
+            'article' => $article
+        ]);
+    }
 }
 

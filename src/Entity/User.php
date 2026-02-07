@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 #[ORM\Table(name: '`User`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,7 +26,7 @@ class User implements UserInterface
 
     #[ORM\Column(length: 180)]
     #[Assert\NotBlank]
-    private ?string $email;
+    private ?string $email = null;
 
     /**
      * @var list<string> The user roles
@@ -38,8 +38,7 @@ class User implements UserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank]
-    private ?string $password;
+    private ?string $password = null;
 
     /**
      * @var Collection<int, Article>
@@ -213,8 +212,4 @@ class User implements UserInterface
         return $this;
     }
 
-    private static function loadValidatorMetadata(ClassMetadata $metadata): void {
-        $metadata->addPropertyConstraint('email', new NotBlank([]));
-        $metadata->addPropertyConstraint('password', new NotBlank([]));
-    }
 }

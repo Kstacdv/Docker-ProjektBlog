@@ -17,7 +17,7 @@ class ArticleProvider
                 'content' => substr($content, 0, 100) . '...',
                 'author' => $article->getAuthor() ? $article->getAuthor()->getEmail() : 'Anonim',
                 'date' => $article->getCreatedAt() ? $article->getCreatedAt()->format('Y-m-d') : null,
-                'link' => '/api/articles/' . $article->getId()
+                'link' => '/article/' . $article->getId()
             ];
         }
 

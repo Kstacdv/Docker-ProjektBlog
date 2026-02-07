@@ -4,7 +4,7 @@
     <article class="full-article">
         <h1>{{ article.title }}</h1>
         <p class="meta">
-            Autor: {{ article.author.email : "Anonim" }}
+            Autor: {{ article.author.email|default('Anonim') }}
             Data: {{ article.dateAdded|date('Y-m-d') }}
         </p>
 

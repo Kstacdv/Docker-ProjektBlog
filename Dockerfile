@@ -49,7 +49,31 @@ ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 
 ###> recipes ###
 ###> doctrine/doctrine-bundle ###
-RUN install-php-extensions pdo_pgsql
+FROM php:8.4-fpm
+
+# system dependencies
+RUN apt-get update && apt-get install -y \
+    libicu-dev \
+    libzip-dev \
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    libonig-dev \
+    libpq-dev \
+    zip \
+    unzip \
+    git \
+    && docker-php-ext-install \
+        intl \
+        zip \
+        pdo \
+        pdo_mysql \
+        mbstring \
+        xml \
+        curl \
+        opcache \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 ###< doctrine/doctrine-bundle ###
 ###< recipes ###
 
