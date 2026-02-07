@@ -5,7 +5,7 @@
 
     {% for article in articles %}
         <div class="article-card">
-            <h2><a href="{{ path('article_search', {'id': article.id}) }}">{{ article.title }}</a></h2>
+            <h2><a href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.title }}</a></h2>
 
             <p>{{ article.dateAdded|date('Y-m-d') }}</p>
             <p>{{ article.articleBody|slice(0, 30) }}...</p>
