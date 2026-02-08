@@ -1,0 +1,6 @@
+article:
+    list_title: "Lista wszystkich artykułów"
+    read_more: "Czytaj więcej"
+    author: "Autor"
+    published_at: "Opublikowano"
+    no_results: "Nie znaleziono artykułów dla frazy: %query%"

@@ -1,0 +1,6 @@
+article:
+    list_title: "All articles list"
+    read_more: "Read more"
+    author: "Author"
+    published_at: "Published at"
+    no_results: "No articles found for: %query%"

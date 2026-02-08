@@ -37,6 +37,7 @@ RUN set -eux; \
        xml \
        sodium \
        http \
+       pdo_pgsql \
     ;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
@@ -46,45 +47,6 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV MERCURE_TRANSPORT_URL=bolt:///data/mercure.db
 
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
-
-###> recipes ###
-###> doctrine/doctrine-bundle ###
-FROM php:8.4-fpm
-
-# system dependencies
-RUN apt-get update && apt-get install -y \
-    libicu-dev \
-    libzip-dev \
-    libxml2-dev \
-    libcurl4-openssl-dev \
-    libonig-dev \
-    libpq-dev \
-    zip \
-    unzip \
-    git \
-    && docker-php-ext-install \
-        intl \
-        zip \
-        pdo \
-        pdo_mysql \
-        mbstring \
-        xml \
-        curl \
-        opcache \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-###< doctrine/doctrine-bundle ###
-###< recipes ###
-
-COPY --link frankenphp/conf.d/10-app.ini $PHP_INI_DIR/app.conf.d/
-COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-COPY --link frankenphp/Caddyfile /etc/frankenphp/Caddyfile
-
-ENTRYPOINT ["docker-entrypoint"]
-
-HEALTHCHECK --start-period=60s CMD curl -f http://localhost:2019/metrics || exit 1
-CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile" ]
 
 # Dev FrankenPHP image
 FROM frankenphp_base AS frankenphp_dev
@@ -103,6 +65,18 @@ RUN set -eux; \
 COPY --link frankenphp/conf.d/20-app.dev.ini $PHP_INI_DIR/app.conf.d/
 
 CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile", "--watch" ]
+
+###< doctrine/doctrine-bundle ###
+###< recipes ###
+
+COPY --link frankenphp/conf.d/10-app.ini $PHP_INI_DIR/app.conf.d/
+COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY --link frankenphp/Caddyfile /etc/frankenphp/Caddyfile
+
+ENTRYPOINT ["docker-entrypoint"]
+
+HEALTHCHECK --start-period=60s CMD curl -f http://localhost:2019/metrics || exit 1
+CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile" ]
 
 # Prod FrankenPHP image
 FROM frankenphp_base AS frankenphp_prod

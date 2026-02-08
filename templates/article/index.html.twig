@@ -9,7 +9,7 @@
         {% if current_tag|default(null) %}
             Artykuły z tagiem: <span style="color: #007bff;">{{ current_tag }}</span>
         {% else %}
-            Lista wszystkich artykułów
+            {{ 'article.list_title'|trans }}
         {% endif %}
     </h1>
 
@@ -28,7 +28,7 @@
                 </div>
             {% endfor %}
         {% else %}
-            <p>Brak artykułów do wyświetlenia.</p>
+            <p>{{ 'article.no_results'|trans({'%query%': searchTerm}) }}</p>
         {% endif %}
     </div>
 
